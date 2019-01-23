@@ -1,0 +1,54 @@
+{% extends 'todo/base.html' %}
+
+{% block title %} Productivity App - Make Your Todo List {% endblock %}
+
+{% block body %}
+    {% for message in messages %}
+        <div class="alert alert-info alert-dissmissable" role="alert">
+            <button class="close" data-dismiss="alert">
+                <small><sup>X</sup></small>
+            </button>
+            {{ message }}
+        </div>
+
+    {% endfor %}
+
+    <div class="col-md-6 mb-3">
+    <form method="POST" action="">
+      <label for="validationTooltip03"><h5><strong>Add a task in your todo list</strong></h5></label>
+      {% csrf_token %}
+      <input type="text" class="form-control" id="validationTooltip03" name="tasks" placeholder="Add a todo task" required><br>
+      <button class="btn btn-success" type="submit">Add to list</button>
+    </form>
+    </div>
+
+
+    <table class="table table-bordered table table-hover col-md-10">
+      <thead class="thead-dark ">
+        <tr>
+          <th scope="col"><center>Tasks</center></th>
+          <th scope="col"><center>Task finished?</center></th>
+          <th scope="col"><center>Remove Task</center></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in tasks %}
+            {% if task.task_finished %}
+                <tr class="table-secondary">
+                  <td class="striker"><a href="{% url 'edit' task.id %}">{{ task.tasks }}</a></td>
+                  <td><center><a href="{% url 'uncross' task.id %}"><button type="button" class="btn btn-warning">Yes!</button></a></center></td>
+                  <td><center><a href="{% url 'delete' task.id %}"><button type="button" class="btn btn-danger">Delete</button></a></center></td>
+                </tr>
+            {% else %}
+                <tr>
+                  <td><a href="{% url 'edit' task.id %}">{{ task.tasks }}</a></td>
+                  <td><center><a href="{% url 'cross_off' task.id %}"><button type="button" class="btn btn-info">No</button></a></center></td>
+                   <td><center><a href="{% url 'delete' task.id %}"><button type="button" class="btn btn-danger">Delete</button></a></center></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+
+
+{% endblock %}

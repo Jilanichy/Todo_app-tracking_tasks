@@ -1,0 +1,20 @@
+{% extends 'todo/base.html' %}
+
+{% block title %} Productivity App - Make Your Todo List {% endblock %}
+
+{% block body %}
+
+    {% if task %}
+
+        <form method="POST" action="">
+          <label for="validationTooltip03"><h4>Edit Your Task</h4></label>
+          {% csrf_token %}
+          <input type="text" class="form-control" id="validationTooltip03" name="tasks" placeholder="{{ task.tasks }}" value="{{ task.tasks }}"><br>
+          <input type="hidden" value="{{ task.task_finished }}" name="task_finished">
+          <button class="btn btn-success" type="submit">Edit Task</button>
+        </form>
+
+    {% endif %}
+
+
+{% endblock %}
